@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import Latex from "./Latex";
+import "./App.css";
 
 // Utility function to detect variables in a formula
 const extractVariables = (formula: string): string[] => {
