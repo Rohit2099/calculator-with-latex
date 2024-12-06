@@ -1,5 +1,6 @@
 import React, { useEffect, useRef } from "react";
 import "../css/Latex.css";
+import { convertToLatex } from "../utils/utils";
 
 interface LatexProps {
     formula: string;
@@ -19,7 +20,7 @@ const Latex: React.FC<LatexProps> = ({ formula }: LatexProps) => {
 
     return (
         <div className="output" id="latex">
-            <div ref={mathJaxRef}>{`\\( ${formula} \\)`}</div>
+            <div ref={mathJaxRef}>{`\\( ${convertToLatex(formula)} \\)`}</div>
         </div>
     );
 };

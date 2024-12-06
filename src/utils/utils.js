@@ -1,34 +1,32 @@
-export const extractVariables = (formula: string): string[] => {
+export const extractVariables = (formula) => {
     const matches = formula.match(/[a-zA-Z]/g);
     return matches ? Array.from(new Set(matches)) : [];
 };
 
-export function convertToLatex(mathExpression: string): string {
+export function convertToLatex(mathExpression) {
     return mathExpression
-        .replace(/\*/g, "\\cdot") // Replace multiplication (*) with \cdot
-        .replace(/\//g, "\\frac") // Prepare for fractions
-        .replace(/(\d+|\w+)\^(\d+)/g, "{$1}^{$2}") // Replace exponents (x^2 -> {x}^{2})
-        .replace(/sqrt\((.*?)\)/g, "\\sqrt{$1}") // Replace square roots (sqrt(x) -> \sqrt{x})
-        .replace(/\(/g, "\\left(") // Replace ( with \left(
-        .replace(/\)/g, "\\right)"); // Replace ) with \right)
+        .replace(/\*/g, "\\cdot")
+        .replace(/\//g, "\\div")
+        .replace(/(\d+|\w+)\^(\d+)/g, "{$1}^{$2}")
+        .replace(/\(/g, "\\left(")
+        .replace(/\)/g, "\\right)");
 }
 
+const operators = {
+    "+": { precedence: 1, associativity: "L" },
+    "-": { precedence: 1, associativity: "L" },
+    "*": { precedence: 2, associativity: "L" },
+    "/": { precedence: 2, associativity: "L" },
+    "^": { precedence: 3, associativity: "R" },
+};
+
+const isOperator = (ch) => Object.keys(operators).includes(ch);
+const isDigit = (ch) => /\d/.test(ch);
+const isVariable = (ch) => /^[a-zA-Z]+$/.test(ch);
+const isOperand = (ch) => isDigit(ch) || isVariable(ch);
+
 export function evaluateFormula(formula, variables = {}) {
-    // Define operator precedence and associativity
     let isError = false;
-
-    const operators = {
-        "+": { precedence: 1, associativity: "L" },
-        "-": { precedence: 1, associativity: "L" },
-        "*": { precedence: 2, associativity: "L" },
-        "/": { precedence: 2, associativity: "L" },
-        "^": { precedence: 3, associativity: "R" },
-    };
-
-    const isOperator = (ch) => Object.keys(operators).includes(ch);
-    const isDigit = (ch) => /\d/.test(ch);
-    const isVariable = (ch) => /^[a-zA-Z]+$/.test(ch);
-    const isOperand = (ch) => isDigit(ch) || isVariable(ch);
 
     const validateExpression = (expr) => {
         const validCharacters = /^[\d+\-*/^().\sA-Za-z]+$/;
@@ -61,7 +59,7 @@ export function evaluateFormula(formula, variables = {}) {
             result += ch;
 
             // Insert '*' between adjacent operands
-            if (i < expr.length - 1 && isOperand(expr[i]) && isOperand(expr[i + 1])) {
+            if (isOperand(expr[i]) && i + 1 < expr.length && isVariable(expr[i + 1])) {
                 result += "*";
             }
         }
@@ -161,6 +159,8 @@ export function evaluateFormula(formula, variables = {}) {
                     case "^":
                         stack.push(Math.pow(a, b));
                         break;
+                    default:
+                        break;
                 }
             }
         }
@@ -175,16 +175,16 @@ export function evaluateFormula(formula, variables = {}) {
         return "";
     }
 
-    validateExpression(formula); // Validate input
+    validateExpression(formula);
     if (isError) {
         return NaN;
     }
     const preprocessedExpr = preprocessExpression(formula.replace(/\s+/g, "")); // Preprocess input
-    const rpn = toRPN(preprocessedExpr); // Convert to RPN
+    const rpn = toRPN(preprocessedExpr);
     if (isError) {
         return NaN;
     }
-    const result = evaluateRPN(rpn); // Evaluate the RPN
+    const result = evaluateRPN(rpn);
     if (isError) {
         return NaN;
     } else {
