@@ -1,15 +1,18 @@
-#label-formula {
-    font-size: 3rem;
-    margin-right: 20px;
-}
-
-#formula {
+.formula {
     width: 20rem;
     height: 5rem;
     padding: 15px;
     font-size: 3rem;
-    border: 2px solid #ccc;
+    border: 2px solid;
     border-radius: 15px;
     outline: none;
     transition: all 0.3s ease;
+}
+
+.error {
+    border-color: red;
+}
+
+.normal {
+    border-color: #ccc;
 }

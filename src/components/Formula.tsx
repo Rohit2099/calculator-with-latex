@@ -1,17 +1,18 @@
-import React, { FC } from "react";
+import React, { FC, useEffect } from "react";
 import "../css/Formula.css";
 
 interface FormulaProps {
     text: string;
     onChange(e: React.ChangeEvent<HTMLInputElement>): void;
+    isError: boolean;
 }
 
-const Formula: FC<FormulaProps> = ({ text, onChange }: FormulaProps) => {
+const Formula: FC<FormulaProps> = ({ text, onChange, isError }: FormulaProps) => {
     return (
         <div>
             <input
                 type="text"
-                id="formula"
+                className={isError ? "formula error" : "formula normal"}
                 value={text}
                 onChange={onChange}
                 placeholder="a + b - 2"

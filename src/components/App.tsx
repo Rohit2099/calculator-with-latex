@@ -9,6 +9,7 @@ import Result from "./Result";
 const App: React.FC = () => {
     const [formula, setFormula] = useState<string>("");
     const [variables, setVariables] = useState<Record<string, number>>({});
+    const [error, setError] = useState<boolean>(false);
 
     const onFormulaChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const newFormula = e.target.value;
@@ -24,7 +25,7 @@ const App: React.FC = () => {
             <Header />
             <div id="container">
                 <div id="input">
-                    <Formula text={formula} onChange={onFormulaChange} />
+                    <Formula text={formula} onChange={onFormulaChange} isError={error} />
 
                     <VariablesList
                         formula={formula}
@@ -35,7 +36,7 @@ const App: React.FC = () => {
                 <div id="output">
                     <Latex formula={formula} />
                     {formula !== "" && <div className="output">=</div>}
-                    <Result formula={formula} variables={variables} />
+                    <Result formula={formula} variables={variables} setError={setError} />
                 </div>
             </div>
         </div>
