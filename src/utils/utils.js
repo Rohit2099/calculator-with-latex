@@ -176,7 +176,7 @@ export function evaluateFormula(formula, variables = {}) {
     if (isError) {
         return NaN;
     }
-    const preprocessedExpr = preprocessExpression(formula.replace(/\s+/g, "")); // Preprocess input
+    const preprocessedExpr = preprocessExpression(formula.replace(/\s+/g, ""));
     const rpn = toRPN(preprocessedExpr);
     if (isError) {
         return NaN;

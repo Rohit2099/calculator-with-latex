@@ -11,10 +11,10 @@ const App: React.FC = () => {
     const [variables, setVariables] = useState<Record<string, number>>({});
     const [error, setError] = useState<boolean>(false);
 
-    const onFormulaChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const onFormulaChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
         const newFormula = e.target.value;
         setFormula(newFormula);
-    };
+    }, []);
 
     const onVariablesChange = useCallback((newVariablesList: Record<string, number>) => {
         setVariables(newVariablesList);
