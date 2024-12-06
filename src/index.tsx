@@ -5,6 +5,12 @@ import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 import "typeface-roboto";
 
+declare global {
+    interface Window {
+        MathJax: { typesetPromise: any };
+    }
+}
+
 const root = ReactDOM.createRoot(document.getElementById("root") as HTMLElement);
 root.render(
     <React.StrictMode>
