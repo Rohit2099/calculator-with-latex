@@ -1,6 +1,7 @@
 import React, { useEffect } from "react";
 import { extractVariables } from "../../utils/utils";
 import "./Variables.css";
+import Variable from "./Variable";
 
 interface VariablesListProps {
     formula: string;
@@ -35,15 +36,11 @@ const VariablesList: React.FC<VariablesListProps> = ({
     return (
         <div>
             {Object.keys(content).map((variable: string) => (
-                <div key={variable} className="list">
-                    <div className="label-variable">{variable}: </div>
-                    <input
-                        type="number"
-                        value={content[variable]}
-                        onChange={(e) => handleVariableChange(variable, parseFloat(e.target.value))}
-                        className="variable"
-                    />
-                </div>
+                <Variable
+                    variable={variable}
+                    value={content[variable]}
+                    handleVariableChange={handleVariableChange}
+                />
             ))}
         </div>
     );

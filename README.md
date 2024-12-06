@@ -22,3 +22,9 @@
 ![success](public/success_state.png)|
 
 ![error](public/error_state.png)|
+
+Design:
+
+-   The main component (App) will hold the state for error, formula and variables since these states would need to be shared among all the child components.
+-   There are mainly 4 child components - Formula, Latex, Variables and Result.
+-   The math expression evaluation is done in the Result component.
