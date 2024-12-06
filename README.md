@@ -7,6 +7,15 @@
 -   MathJax (for latex compilation)
 -   TypeScript
 
+### Run
+
+-   Clone the github repositoruy.
+-   Open terminal at the root directory of this project.
+
+```
+    npm run start
+```
+
 ### Features:
 
 -   Supports basic arithematic operations like addition, subtraction, division, multiplication and exponentiation.
