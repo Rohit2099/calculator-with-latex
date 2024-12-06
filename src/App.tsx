@@ -1,10 +1,10 @@
 import React, { useState, useCallback } from "react";
-import Latex from "./Latex";
-import "../css/App.css";
-import Header from "./Header";
-import Formula from "./Formula";
-import VariablesList from "./VariablesList";
-import Result from "./Result";
+import Latex from "./components/Latex/Latex";
+import "./App.css";
+import Header from "./components/Header/Header";
+import Formula from "./components/Formula/Formula";
+import VariablesList from "./components/Variables/VariablesList";
+import Result from "./components/Result/Result";
 
 const App: React.FC = () => {
     const [formula, setFormula] = useState<string>("");

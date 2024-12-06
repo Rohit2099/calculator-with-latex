@@ -1,6 +1,6 @@
 import React, { SetStateAction, useEffect, useState, Dispatch } from "react";
-import { evaluateFormula } from "../utils/utils";
-import "../css/Result.css";
+import { evaluateFormula } from "../../utils/utils";
+import "./Result.css";
 
 interface ResultProps {
     formula: string;

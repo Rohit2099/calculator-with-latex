@@ -1,6 +1,6 @@
 import React, { useEffect, useRef } from "react";
-import "../css/Latex.css";
-import { convertToLatex } from "../utils/utils";
+import "./Latex.css";
+import { convertToLatex } from "../../utils/utils";
 
 interface LatexProps {
     formula: string;
@@ -11,10 +11,13 @@ const Latex: React.FC<LatexProps> = ({ formula }: LatexProps) => {
 
     useEffect(() => {
         if (window.MathJax && mathJaxRef.current) {
-            // Queue the typesetting for the LaTeX content
-            window.MathJax.typesetPromise([mathJaxRef.current]).catch((err: any) =>
-                console.error("MathJax typeset failed:", err)
-            );
+            try {
+                window.MathJax.typesetPromise([mathJaxRef.current]).catch((err: any) => {
+                    console.error("MathJax typeset failed:", err);
+                });
+            } catch (e) {
+                console.log("custom error");
+            }
         }
     }, [formula]);
 

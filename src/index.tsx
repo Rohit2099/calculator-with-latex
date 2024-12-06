@@ -1,13 +1,12 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
-import "./css/index.css";
-import App from "./components/App";
+import "./index.css";
+import App from "./App";
 import reportWebVitals from "./reportWebVitals";
-import "typeface-roboto";
 
 declare global {
     interface Window {
-        MathJax: { typesetPromise: any };
+        MathJax: { typesetPromise: any; tex: any; options: any };
     }
 }
 

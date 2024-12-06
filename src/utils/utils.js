@@ -136,9 +136,6 @@ export function evaluateFormula(formula, variables = {}) {
             } else if (isOperator(token)) {
                 const b = stack.pop();
                 const a = stack.pop();
-                // if (a === undefined || b === undefined) {
-                //     throw new Error("Invalid input: Malformed expression.");
-                // }
                 switch (token) {
                     case "+":
                         stack.push(a + b);

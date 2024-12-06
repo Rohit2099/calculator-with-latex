@@ -1,5 +1,5 @@
-import React, { FC, useEffect } from "react";
-import "../css/Formula.css";
+import React, { FC } from "react";
+import "./Formula.css";
 
 interface FormulaProps {
     text: string;

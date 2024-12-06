@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
-import { extractVariables } from "../utils/utils";
-import "../css/Variables.css";
+import { extractVariables } from "../../utils/utils";
+import "./Variables.css";
 
 interface VariablesListProps {
     formula: string;

@@ -1,5 +1,5 @@
 import React from "react";
-import "../css/Header.css";
+import "./Header.css";
 
 const Header: React.FC = () => {
     return <div id="header">Formula Calculator</div>;
