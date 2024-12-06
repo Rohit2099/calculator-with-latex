@@ -6,7 +6,7 @@ import Formula from "./Formula";
 import VariablesList from "./VariablesList";
 import Result from "./Result";
 
-const FormulaCalculator: React.FC = () => {
+const App: React.FC = () => {
     const [formula, setFormula] = useState<string>("");
     const [variables, setVariables] = useState<Record<string, number>>({});
 
@@ -42,4 +42,4 @@ const FormulaCalculator: React.FC = () => {
     );
 };
 
-export default FormulaCalculator;
+export default App;

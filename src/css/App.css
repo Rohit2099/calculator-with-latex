@@ -29,6 +29,6 @@
     align-items: center;
 }
 
-#output {
-    /* gap: 20px; */
+#input {
+    gap: 20px;
 }

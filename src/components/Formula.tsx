@@ -1,4 +1,5 @@
 import React, { FC } from "react";
+import "../css/Formula.css";
 
 interface FormulaProps {
     text: string;
@@ -8,10 +9,6 @@ interface FormulaProps {
 const Formula: FC<FormulaProps> = ({ text, onChange }: FormulaProps) => {
     return (
         <div>
-            <label htmlFor="formula">
-                <text>Enter Formula:</text>
-            </label>
-
             <input
                 type="text"
                 id="formula"
