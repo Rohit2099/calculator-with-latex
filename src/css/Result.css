@@ -1,0 +1,10 @@
+.output {
+    font-size: 6rem;
+    /* border: 1px solid grey; */
+    border-radius: 25px;
+    padding: 2rem;
+    text-align: center;
+    text-wrap: wrap;
+    overflow: scroll;
+    max-width: 30rem;
+}

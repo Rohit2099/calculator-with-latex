@@ -9,7 +9,7 @@ const Formula: FC<FormulaProps> = ({ text, onChange }: FormulaProps) => {
     return (
         <div>
             <label htmlFor="formula">
-                <strong>Enter Formula:</strong>
+                <text>Enter Formula:</text>
             </label>
 
             <input
@@ -17,7 +17,8 @@ const Formula: FC<FormulaProps> = ({ text, onChange }: FormulaProps) => {
                 id="formula"
                 value={text}
                 onChange={onChange}
-                placeholder="e.g., a+b^2"
+                placeholder="a + b - 2"
+                autoFocus
             />
         </div>
     );

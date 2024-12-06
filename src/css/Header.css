@@ -1,12 +1,13 @@
 #header {
     background: black;
-    height: 50px;
-    line-height: 50px;
+    height: 3.125rem;
+    line-height: 3.125rem;
     font-size: 2rem;
     width: 100%;
     text-align: center;
     color: white;
     vertical-align: middle;
+    text-wrap: nowrap;
 }
 
 #header:hover {

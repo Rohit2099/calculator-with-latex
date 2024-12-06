@@ -20,15 +20,25 @@ const FormulaCalculator: React.FC = () => {
     }, []);
 
     return (
-        <>
+        <div id="app">
             <Header />
             <div id="container">
-                <Formula text={formula} onChange={onFormulaChange} />
-                <VariablesList formula={formula} onChange={onVariablesChange} content={variables} />
-                <Latex formula={formula} />
-                <Result formula={formula} variables={variables} />
+                <div id="input">
+                    <Formula text={formula} onChange={onFormulaChange} />
+
+                    <VariablesList
+                        formula={formula}
+                        onChange={onVariablesChange}
+                        content={variables}
+                    />
+                </div>
+                <div id="output">
+                    <Latex formula={formula} />
+                    {formula !== "" && <div className="output">=</div>}
+                    <Result formula={formula} variables={variables} />
+                </div>
             </div>
-        </>
+        </div>
     );
 };
 

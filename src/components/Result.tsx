@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { evaluateFormula } from "../utils/utils";
+import "../css/Result.css";
 
 interface ResultProps {
     formula: string;
@@ -14,8 +15,7 @@ const Result: React.FC<ResultProps> = ({ formula, variables }: ResultProps) => {
     }, [formula, variables]);
 
     return (
-        <div>
-            <h3>Result:</h3>
+        <div className="output">
             <div>{result}</div>
         </div>
     );
