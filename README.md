@@ -19,9 +19,9 @@
 
 <br>
 
-![success](public/success_state.png)|
+![success](public/success_state.png)
 
-![error](public/error_state.png)|
+![error](public/error_state.png)
 
 Design:
 
