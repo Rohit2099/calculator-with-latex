@@ -13,12 +13,9 @@ export function convertToLatex(mathExpression: string): string {
         .replace(/\)/g, "\\right)"); // Replace ) with \right)
 }
 
-export function evaluateFormula(formula: string, variables: Record<string, number>): string {
+export function evaluateFormula(formula, variables = {}) {
     // Define operator precedence and associativity
-    const replacedFormula = formula.replace(/[a-zA-Z]/g, (match) => {
-        if (variables[match] === undefined) throw new Error(`Variable ${match} is undefined`);
-        return variables[match].toString();
-    });
+    let isError = false;
 
     const operators = {
         "+": { precedence: 1, associativity: "L" },
@@ -28,13 +25,49 @@ export function evaluateFormula(formula: string, variables: Record<string, numbe
         "^": { precedence: 3, associativity: "R" },
     };
 
-    // Function to check if a character is an operator
     const isOperator = (ch) => Object.keys(operators).includes(ch);
-
-    // Function to check if a character is a digit
     const isDigit = (ch) => /\d/.test(ch);
+    const isVariable = (ch) => /^[a-zA-Z]+$/.test(ch);
+    const isOperand = (ch) => isDigit(ch) || isVariable(ch);
 
-    // Convert infix expression to Reverse Polish Notation (RPN)
+    const validateExpression = (expr) => {
+        const validCharacters = /^[\d+\-*/^().\sA-Za-z]+$/;
+        if (!validCharacters.test(expr)) {
+            isError = true;
+            return;
+        }
+
+        let openParens = 0;
+        for (const ch of expr) {
+            if (ch === "(") openParens++;
+            if (ch === ")") openParens--;
+            if (openParens < 0) {
+                isError = true;
+                return;
+            }
+        }
+        if (openParens !== 0) {
+            isError = true;
+            return;
+        }
+
+        return true;
+    };
+
+    const preprocessExpression = (expr) => {
+        let result = "";
+        for (let i = 0; i < expr.length; i++) {
+            const ch = expr[i];
+            result += ch;
+
+            // Insert '*' between adjacent operands
+            if (i < expr.length - 1 && isOperand(expr[i]) && isOperand(expr[i + 1])) {
+                result += "*";
+            }
+        }
+        return result;
+    };
+
     const toRPN = (expr) => {
         const outputQueue = [];
         const operatorStack = [];
@@ -44,7 +77,6 @@ export function evaluateFormula(formula: string, variables: Record<string, numbe
             const ch = expr[i];
 
             if (isDigit(ch)) {
-                // Parse multi-digit numbers
                 let number = "";
                 while (i < expr.length && (isDigit(expr[i]) || expr[i] === ".")) {
                     number += expr[i];
@@ -52,6 +84,10 @@ export function evaluateFormula(formula: string, variables: Record<string, numbe
                 }
                 outputQueue.push(parseFloat(number));
                 continue;
+            }
+
+            if (isVariable(ch)) {
+                outputQueue.push(parseFloat(variables[ch]));
             }
 
             if (isOperator(ch)) {
@@ -77,28 +113,34 @@ export function evaluateFormula(formula: string, variables: Record<string, numbe
                 ) {
                     outputQueue.push(operatorStack.pop());
                 }
-                operatorStack.pop(); // Remove '('
+                operatorStack.pop();
             }
             i++;
         }
 
-        // Pop remaining operators
         while (operatorStack.length > 0) {
-            outputQueue.push(operatorStack.pop());
+            const top = operatorStack.pop();
+            if (top === "(" || top === ")") {
+                isError = true;
+                return;
+            }
+            outputQueue.push(top);
         }
 
         return outputQueue;
     };
 
-    // Evaluate RPN expression
     const evaluateRPN = (rpn) => {
         const stack = [];
         for (const token of rpn) {
             if (typeof token === "number") {
                 stack.push(token);
-            } else {
+            } else if (isOperator(token)) {
                 const b = stack.pop();
                 const a = stack.pop();
+                // if (a === undefined || b === undefined) {
+                //     throw new Error("Invalid input: Malformed expression.");
+                // }
                 switch (token) {
                     case "+":
                         stack.push(a + b);
@@ -110,6 +152,10 @@ export function evaluateFormula(formula: string, variables: Record<string, numbe
                         stack.push(a * b);
                         break;
                     case "/":
+                        if (b === 0) {
+                            isError = true;
+                            return;
+                        }
                         stack.push(a / b);
                         break;
                     case "^":
@@ -118,10 +164,30 @@ export function evaluateFormula(formula: string, variables: Record<string, numbe
                 }
             }
         }
+        if (stack.length !== 1) {
+            isError = true;
+            return;
+        }
         return stack[0];
     };
 
-    // Preprocess and evaluate
-    const rpn = toRPN(replacedFormula.replace(/\s+/g, "")); // Remove spaces
-    return evaluateRPN(rpn);
+    if (formula === "") {
+        return "";
+    }
+
+    validateExpression(formula); // Validate input
+    if (isError) {
+        return NaN;
+    }
+    const preprocessedExpr = preprocessExpression(formula.replace(/\s+/g, "")); // Preprocess input
+    const rpn = toRPN(preprocessedExpr); // Convert to RPN
+    if (isError) {
+        return NaN;
+    }
+    const result = evaluateRPN(rpn); // Evaluate the RPN
+    if (isError) {
+        return NaN;
+    } else {
+        return result;
+    }
 }

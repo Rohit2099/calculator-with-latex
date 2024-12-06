@@ -1,7 +1,8 @@
 import React from "react";
+import "../css/Header.css";
 
 const Header: React.FC = () => {
-    return <h1>Formula Calculator</h1>;
+    return <div id="header">Formula Calculator</div>;
 };
 
 export default Header;

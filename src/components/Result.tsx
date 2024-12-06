@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { evaluateFormula } from "./utils/utils";
+import { evaluateFormula } from "../utils/utils";
 
 interface ResultProps {
     formula: string;
@@ -10,9 +10,7 @@ const Result: React.FC<ResultProps> = ({ formula, variables }: ResultProps) => {
     const [result, setResult] = useState("");
 
     useEffect(() => {
-        if (formula) {
-            setResult(evaluateFormula(formula, variables));
-        }
+        setResult(evaluateFormula(formula, variables));
     }, [formula, variables]);
 
     return (

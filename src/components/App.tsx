@@ -1,6 +1,6 @@
 import React, { useState, useCallback } from "react";
 import Latex from "./Latex";
-import "./App.css";
+import "../css/App.css";
 import Header from "./Header";
 import Formula from "./Formula";
 import VariablesList from "./VariablesList";
@@ -20,13 +20,15 @@ const FormulaCalculator: React.FC = () => {
     }, []);
 
     return (
-        <div id="container">
+        <>
             <Header />
-            <Formula text={formula} onChange={onFormulaChange} />
-            <VariablesList formula={formula} onChange={onVariablesChange} content={variables} />
-            <Latex formula={formula} />
-            <Result formula={formula} variables={variables} />
-        </div>
+            <div id="container">
+                <Formula text={formula} onChange={onFormulaChange} />
+                <VariablesList formula={formula} onChange={onVariablesChange} content={variables} />
+                <Latex formula={formula} />
+                <Result formula={formula} variables={variables} />
+            </div>
+        </>
     );
 };
 

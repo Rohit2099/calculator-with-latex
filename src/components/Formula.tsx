@@ -17,13 +17,6 @@ const Formula: FC<FormulaProps> = ({ text, onChange }: FormulaProps) => {
                 id="formula"
                 value={text}
                 onChange={onChange}
-                style={{
-                    width: "100%",
-                    padding: "10px",
-                    margin: "10px 0",
-                    border: "1px solid #ccc",
-                    borderRadius: "4px",
-                }}
                 placeholder="e.g., a+b^2"
             />
         </div>
